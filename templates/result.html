@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Ficheiro enviado | ShareSafely</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .copy-btn {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h2 class="text-success">✅ Ficheiro "{{ filename }}" enviado com sucesso!</h2>
+        <p class="lead mt-3">O link abaixo estará disponível durante <strong>1 hora</strong>.</p>
+
+        <div class="input-group mb-3 mt-4">
+            <input type="text" class="form-control" id="downloadLink" value="{{ download_url }}" readonly>
+            <button class="btn btn-outline-secondary copy-btn" onclick="copyLink()">Copiar</button>
+        </div>
+
+        <p id="timer" class="text-muted">Tempo restante: 1:00:00</p>
+
+        <a href="{{ download_url }}" target="_blank" class="btn btn-primary mt-3">Descarregar ficheiro</a>
+    </div>
+
+    <script>
+    function copyLink() {
+        const linkInput = document.getElementById("downloadLink");
+        linkInput.select();
+        document.execCommand("copy");
+        alert("Link copiado para a área de transferência!");
+    }
+
+    let seconds = 3600;
+    const timerElement = document.getElementById("timer");
+
+    const countdown = setInterval(() => {
+        seconds--;
+
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+
+        timerElement.textContent = `Tempo restante: ${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+        if (seconds <= 0) {
+            clearInterval(countdown);
+            timerElement.textContent = "⏰ Link expirado!";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>

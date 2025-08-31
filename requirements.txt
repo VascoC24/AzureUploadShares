@@ -1,0 +1,5 @@
+flask
+azure-storage-blob
+python-dotenv
+requests
+gunicorn
